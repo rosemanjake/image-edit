@@ -7,7 +7,7 @@
 #include "imagedata.h"
 #include "imagetransforms.h"
 
-// Use the parsed command line argeuments and image data to perform a transform on an image.
+// Use the parsed command line arguments and image data to perform a transform on an image.
 void processImage(CommandInfo *commandInfo, ImageData *imageData){
   unsigned char* outputBuffer = malloc(imageData->fileSize);
   memcpy(outputBuffer, imageData->fileBuffer, imageData->fileSize);
