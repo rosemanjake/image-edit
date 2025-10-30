@@ -21,4 +21,6 @@ ImageMetadata *getHeaderInfo(unsigned char* fileBuffer);
 
 void printImageMetadata(struct ImageMetadata *metadata);
 
+void freeImageMetadata(ImageMetadata *metadata);
+
 #endif

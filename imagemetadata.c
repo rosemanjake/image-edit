@@ -41,6 +41,11 @@ ImageMetadata *getHeaderInfo(unsigned char* fileBuffer){
   return metadata;
 }
 
+void freeImageMetadata(ImageMetadata *metadata) {
+  free(metadata->fullHeader);
+  free(metadata);
+}
+
 void printImageMetadata(struct ImageMetadata *metadata){
   printf("File size: %d\n", metadata->fileSize);
   printf("Image height: %d\n", metadata->imageHeight);

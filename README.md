@@ -17,7 +17,7 @@ This program supports Bitmap files. The possible transformations are as follows:
 Compile the program with this `gcc` command:
 
 ```shell
-gcc -Wall -Wextra -g3 /path/to/file/image-edit/imageeditor.c /path/to/file/image-edit/commandinfo.c /path/to/file/image-edit/imagemetadata.c /path/to/file/image-edit/imagetransforms.c -o /path/to/file/image-edit/output/imageeditor
+gcc -Wall -Wextra -g3 /Users/jakeroseman/image-edit/imageeditor.c /Users/jakeroseman/image-edit/commandinfo.c /Users/jakeroseman/image-edit/imagemetadata.c /Users/jakeroseman/image-edit/imagetransforms.c -o /Users/jakeroseman/image-edit/output/imageeditor
 ```
 
 ## Run

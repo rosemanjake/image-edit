@@ -28,6 +28,7 @@ unsigned char* readBitMapData(char* fileName){
 
   unsigned char* fileBuffer = malloc(fileSize * sizeof(unsigned char));
   fread(fileBuffer, 1, fileSize, file);
+  fclose(file);
 
   return fileBuffer;
 }
@@ -40,6 +41,13 @@ unsigned char **getPixelArray(ImageMetadata *metadata){
     pixelArray[i] = malloc(metadata->totalBytesPerRow * sizeof(unsigned char *));
   }
   return pixelArray;
+}
+
+void freePixelArray(unsigned char **pixelArray, ImageMetadata *metadata){
+  for (size_t i = 0; i < metadata->imageHeight; i++){
+    free(pixelArray[i]);
+  }
+  free(pixelArray);
 }
 
 // Fills the 2d pixel array with the data from the provided char array.
@@ -102,7 +110,13 @@ void processImage(CommandInfo *commandInfo, ImageMetadata *metadata, unsigned ch
   }
 
   FILE* outputFile = openFile(commandInfo->outputFileName, "wb");
-  fwrite(flattenPixelArray(modifiedImageData, metadata), 1, metadata->fileSize, outputFile);
+  char* flattenedData = flattenPixelArray(modifiedImageData, metadata);
+  fwrite(flattenedData, 1, metadata->fileSize, outputFile);
+  fclose(outputFile);
+
+  free(flattenedData);
+  freePixelArray(pixelArray, metadata);
+  freePixelArray(modifiedImageData, metadata);
 }
 
 int main(int argc, char *argv[]){
@@ -129,6 +143,10 @@ int main(int argc, char *argv[]){
   }
 
   processImage(commandInfo, metadata, fileBuffer);
+
+  free(commandInfo);
+  freeImageMetadata(metadata);
+  free(fileBuffer);
 
   end = clock();
   cpu_time_used = ((double) (end - start)) / CLOCKS_PER_SEC;
