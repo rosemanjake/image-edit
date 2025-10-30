@@ -66,11 +66,3 @@ void freeImageData(ImageData *imageData) {
   free(imageData->fileBuffer);
   free(imageData);
 }
-
-void printImageData(struct ImageData *imageData){
-  printf("File size: %d\n", imageData->fileSize);
-  printf("Image height: %d\n", imageData->imageHeight);
-  printf("Image width: %d\n", imageData->imageWidth);
-  printf("pixelBytesPerRow: %d\n", imageData->pixelBytesPerRow);
-  printf("paddingBytesPerRow: %d\n", imageData->paddingBytesPerRow);
-}

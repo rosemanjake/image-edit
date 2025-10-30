@@ -22,8 +22,6 @@ ImageData *getImageData(char* fileName);
 
 FILE *openFile(const char* fileName, const char* mode);
 
-void printImageData(struct ImageData *imageData);
-
 void freeImageData(ImageData *imageData);
 
 #endif
