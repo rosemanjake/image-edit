@@ -2,7 +2,7 @@
 #include "imagedata.h"
 
 // Fill the image with blue pixel
-void fillWithSolidColour(char* outputBuffer, ImageData *imageData){
+void fillWithSolidColour(unsigned char* outputBuffer, ImageData *imageData){
   for (uint32_t row = 0; row < imageData->imageHeight; row++){
     for (uint32_t pixel = 0; pixel < imageData->imageWidth; pixel++){
       int offset = imageData->dataOffset + (row * imageData->totalBytesPerRow) + (pixel * 3);
@@ -15,7 +15,7 @@ void fillWithSolidColour(char* outputBuffer, ImageData *imageData){
 
 // Flip image on the X axis (up->down)
 // Copies the rows directly from the file buffer to the output buffer, in reverse order.
-void verticalFlip(char* outputBuffer, char* fileBuffer, ImageData *imageData){
+void verticalFlip(unsigned char* outputBuffer, char* fileBuffer, ImageData *imageData){
   for (uint32_t row = 0; row < imageData->imageHeight; row++){
     int outputOffset = imageData->fileSize - (row * imageData->totalBytesPerRow);
     int srcOffset = row * imageData->totalBytesPerRow;
@@ -25,7 +25,7 @@ void verticalFlip(char* outputBuffer, char* fileBuffer, ImageData *imageData){
 
 // Flip image on the Y axis (left->right)
 // Copies each row from the file buffer to the output buffer, with the pixels in reverse order.
-void horizontalFlip(char* outputBuffer, char* fileBuffer, ImageData *imageData){
+void horizontalFlip(unsigned char* outputBuffer, char* fileBuffer, ImageData *imageData){
   for (uint32_t row = 0; row < imageData->imageHeight; row++){
     for (uint32_t pixel = 0; pixel < imageData->imageWidth; pixel++){
       int outputOffset = imageData->dataOffset + ((row + 1) * imageData->totalBytesPerRow) - imageData->paddingBytesPerRow - (pixel * 3);

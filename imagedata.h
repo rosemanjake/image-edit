@@ -9,7 +9,7 @@ extern const int HEADER_LENGTH;
 
 typedef struct ImageData{
   int fileSize;
-  char *fileBuffer;
+  unsigned char *fileBuffer;
   uint32_t imageWidth;
   uint32_t imageHeight;
   uint32_t dataOffset;

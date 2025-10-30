@@ -18,14 +18,14 @@ FILE *openFile(const char* fileName, const char* mode){
 }
 
 // Reads a full bitmap file and return its contents as a byte array.
-char *readBitMapData(char *fileName, int *fileSize){
+unsigned char *readBitMapData(char *fileName, int *fileSize){
   FILE* file = openFile(fileName, "rb");
   if (file == NULL) return NULL;
   fseek(file, 0, SEEK_END);
   *fileSize = (int)ftell(file);
   fseek(file, 0, SEEK_SET);
 
-  char *fileBuffer = malloc(*fileSize * sizeof(unsigned char));
+  unsigned char *fileBuffer = malloc(*fileSize * sizeof(unsigned char));
   if (fileBuffer == NULL){
     perror("Could not allocate memory for fileBuffer");
     return NULL;
@@ -46,20 +46,20 @@ ImageData *getImageData(char* fileName){
     return NULL;
   }
 
-  imageData->imageWidth = (unsigned char)imageData->fileBuffer[18] |
-                      ((unsigned char)imageData->fileBuffer[19] << 8) |
-                      ((unsigned char)imageData->fileBuffer[20] << 16) |
-                      ((unsigned char)imageData->fileBuffer[21] << 24);
+  imageData->imageWidth = imageData->fileBuffer[18] |
+                      (imageData->fileBuffer[19] << 8) |
+                      (imageData->fileBuffer[20] << 16) |
+                      (imageData->fileBuffer[21] << 24);
 
-  imageData->imageHeight = (unsigned char)imageData->fileBuffer[22] |
-                      ((unsigned char)imageData->fileBuffer[23] << 8) |
-                      ((unsigned char)imageData->fileBuffer[24] << 16) |
-                      ((unsigned char)imageData->fileBuffer[25] << 24);
+  imageData->imageHeight = imageData->fileBuffer[22] |
+                      (imageData->fileBuffer[23] << 8) |
+                      (imageData->fileBuffer[24] << 16) |
+                      (imageData->fileBuffer[25] << 24);
 
-  imageData->dataOffset = (unsigned char)imageData->fileBuffer[10] |
-                  ((unsigned char)imageData->fileBuffer[11] << 8) |
-                  ((unsigned char)imageData->fileBuffer[12] << 16) |
-                  ((unsigned char)imageData->fileBuffer[13] << 24);
+  imageData->dataOffset = imageData->fileBuffer[10] |
+                  (imageData->fileBuffer[11] << 8) |
+                  (imageData->fileBuffer[12] << 16) |
+                  (imageData->fileBuffer[13] << 24);
 
   imageData->pixelBytesPerRow = imageData->imageWidth * 3;
   imageData->paddingBytesPerRow = (4 - (imageData->pixelBytesPerRow % 4)) % 4;

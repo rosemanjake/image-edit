@@ -9,7 +9,7 @@
 
 // Use the parsed command line argeuments and image data to perform a transform on an image.
 void processImage(CommandInfo *commandInfo, ImageData *imageData){
-  char* outputBuffer = malloc(imageData->fileSize);
+  unsigned char* outputBuffer = malloc(imageData->fileSize);
   memcpy(outputBuffer, imageData->fileBuffer, imageData->fileSize);
 
   switch (commandInfo->transformation){

@@ -48,9 +48,9 @@ Your command may look as follows:
 
 For a 5MB BMP image on my Macbook Air M2, the processing times are as follows:
 
--   `horizontal_flip`: 13.6ms.
--   `vertical_flip`: 2.353ms.
--   `solid_color`: 6.407ms.
+-   `horizontal_flip`: 11.73ms.
+-   `vertical_flip`: 2.2ms.
+-   `solid_color`: 6.0ms.
 
 In my first attempt, the program was running in ~27ms. This was because I was
 arranging the pixel data into a 2D array to make the transformation functions
