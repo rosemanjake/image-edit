@@ -36,7 +36,7 @@ char *readBitMapData(char *fileName, int *fileSize){
   return fileBuffer;
 }
 
-// Parse out the core data from the file header.
+// Parse out the core data from the BMP file.
 ImageData *getImageData(char* fileName){
   ImageData *imageData = malloc(sizeof(ImageData));
   imageData->fileSize = 0;
