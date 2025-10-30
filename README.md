@@ -1,8 +1,8 @@
 # Image Editor
 
-This is a basic image editing program. I wrote it just to practice my C skills.
-It is **not** vibe coded. The use of AI was limited to unblocking errors; the
-implementation is my own.
+This is a basic image editing program. I wrote it just to practice my C skills
+while on paternity leave. It is **not** vibe coded. The use of AI was limited to
+unblocking errors; the implementation is my own.
 
 ## Transformations
 
@@ -17,7 +17,7 @@ This program supports Bitmap files. The possible transformations are as follows:
 Compile the program with this `gcc` command:
 
 ```shell
-gcc -Wall -Wextra -g3 /Users/jakeroseman/image-edit/imageeditor.c /Users/jakeroseman/image-edit/commandinfo.c /Users/jakeroseman/image-edit/imagemetadata.c /Users/jakeroseman/image-edit/imagetransforms.c -o /Users/jakeroseman/image-edit/output/imageeditor
+gcc -Wall -Wextra -g3 /Users/jakeroseman/image-edit/imageeditor.c /Users/jakeroseman/image-edit/commandinfo.c /Users/jakeroseman/image-edit/imagedata.c /Users/jakeroseman/image-edit/imagetransforms.c -o /Users/jakeroseman/image-edit/output/imageeditor
 ```
 
 ## Run
@@ -36,3 +36,20 @@ Your command may look as follows:
 ```shell
 ./"imageeditor" vertical_flip /path/to/file/my_image.bmp /path/to/file/my_output_image.bmp
 ```
+
+## Performance
+
+For a 5MB BMP image on my Macbook Air M2, the processing times are as follows:
+
+-   `horizontal_flip`: 13.6ms.
+-   `vertical_flip`: 2.353ms.
+-   `solid_color`: 6.407ms.
+
+In my first attempt, the program was running in ~27ms. This was because I was
+arranging the pixel data into a 2D array to make the transformation functions
+simpler. However, that approach was quite slow beacuse the program was copying
+the data multiple time across several buffers.
+
+I simplified the code so that it copies data from the file buffer directly into
+a single output buffer, using `memcpy` and `memset` where possible. this yields
+a much faster program.
