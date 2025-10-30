@@ -17,7 +17,12 @@ This program supports Bitmap files. The possible transformations are as follows:
 Compile the program with this `gcc` command:
 
 ```shell
-gcc -Wall -Wextra -g3 /Users/jakeroseman/image-edit/imageeditor.c /Users/jakeroseman/image-edit/commandinfo.c /Users/jakeroseman/image-edit/imagedata.c /Users/jakeroseman/image-edit/imagetransforms.c -o /Users/jakeroseman/image-edit/output/imageeditor
+gcc -Wall -Wextra -g3 \
+    /path/to/imageeditor.c \
+    /path/to/commandinfo.c \
+    /path/to/imagedata.c \
+    /path/to/imagetransforms.c \
+    -o /path/to/output/imageeditor
 ```
 
 ## Run
@@ -34,7 +39,9 @@ Run the binary from the command line and pass it 3 arguments:
 Your command may look as follows:
 
 ```shell
-./"imageeditor" vertical_flip /path/to/file/my_image.bmp /path/to/file/my_output_image.bmp
+./imageeditor vertical_flip \
+    /path/to/file/my_image.bmp \
+    /path/to/file/my_output_image.bmp
 ```
 
 ## Performance
@@ -51,5 +58,5 @@ simpler. However, that approach was quite slow beacuse the program was copying
 the data multiple time across several buffers.
 
 I simplified the code so that it copies data from the file buffer directly into
-a single output buffer, using `memcpy` and `memset` where possible. this yields
-a much faster program.
+a single output buffer, using `memcpy` and `memset` where possible. Doing so
+yields a much faster program.
