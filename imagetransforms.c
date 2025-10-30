@@ -1,40 +1,34 @@
-#include "imagemetadata.h"
+#include <string.h>
+#include "imagedata.h"
 
-// Need to refactor this to work with the 2d array?
-void fillWithSolidColour(unsigned char** finalData, ImageMetadata *metadata){
-  for (int y = metadata->imageHeight - 1; y >= 0; y--){ 
-    for (uint32_t x = 0; x < metadata->pixelBytesPerRow; x+=3){
-      finalData[y][x] = 0xFF;
-      finalData[y][x + 1] = 0x00;
-      finalData[y][x + 2] = 0x00;
+// Fill the image with blue pixel
+void fillWithSolidColour(char* outputBuffer, ImageData *imageData){
+  for (uint32_t row = 0; row < imageData->imageHeight; row++){
+    for (uint32_t pixel = 0; pixel < imageData->imageWidth; pixel++){
+      int offset = imageData->dataOffset + (row * imageData->totalBytesPerRow) + (pixel * 3);
+      outputBuffer[offset] = 0xFF;
+      outputBuffer[offset + 1] = 0x00;
+      outputBuffer[offset + 2] = 0x00;
     }
   }
 }
 
-// Flip an image on the y axis.
-void verticalFlip(unsigned char** pixelArray, unsigned char** finalData, ImageMetadata *metadata){
-  int currentRow = 0;
-  for (int y = metadata->imageHeight - 1; y >= 0; y--){ 
-    for (uint32_t x = 0; x < metadata->totalBytesPerRow; x++){
-      finalData[currentRow][x] = pixelArray[y][x];
-    }
-    currentRow++;
+// Flip image on the X axis (up->down)
+void verticalFlip(char* outputBuffer, char* fileBuffer, ImageData *imageData){
+  for (uint32_t row = 0; row < imageData->imageHeight; row++){
+    int outputOffset = imageData->fileSize - (row * imageData->totalBytesPerRow);
+    int srcOffset = row * imageData->totalBytesPerRow;
+    memcpy(outputBuffer + outputOffset, fileBuffer + srcOffset + imageData->dataOffset, imageData->totalBytesPerRow);
   }
 }
 
-// Flip an image on the x axis.
-void horizontalFlip(unsigned char** pixelArray, unsigned char** finalData, ImageMetadata *metadata){
-  for (uint32_t y = 0; y < metadata->imageHeight; y++){ 
-    int cellOffset = 0;
-    for (int32_t x = (metadata->totalBytesPerRow - metadata->paddingBytesPerRow) - 1; x >= 0; x-=3){
-      finalData[y][cellOffset] = pixelArray[y][x-2];
-      finalData[y][cellOffset+1] = pixelArray[y][x-1];
-      finalData[y][cellOffset+2] = pixelArray[y][x];
-      cellOffset+=3;
-    }
-    for (uint32_t p = 0; p < metadata->paddingBytesPerRow; p++) {
-      finalData[y][metadata->pixelBytesPerRow + p] = 0x00;
+// Flip image on the Y axis (left->right)
+void horizontalFlip(char* outputBuffer, char* fileBuffer, ImageData *imageData){
+  for (uint32_t row = 0; row < imageData->imageHeight; row++){
+    for (uint32_t pixel = 0; pixel < imageData->imageWidth; pixel++){
+      int outputOffset = imageData->dataOffset + ((row + 1) * imageData->totalBytesPerRow) - imageData->paddingBytesPerRow - (pixel * 3);
+      int srcOffset = imageData->dataOffset + (row * imageData->totalBytesPerRow) + (pixel * 3);
+      memcpy(outputBuffer + outputOffset, fileBuffer + srcOffset, 3);
     }
   }
 }
-

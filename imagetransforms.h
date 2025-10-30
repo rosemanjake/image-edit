@@ -1,10 +1,10 @@
 #ifndef IMAGETRANSFORMS_H_
 #define IMAGETRANSFORMS_H_
 
-void verticalFlip(unsigned char** pixelArray, unsigned char** finalData, ImageMetadata *metadata);
+void verticalFlip(char* outputBuffer, char* fileBuffer, ImageData *imageData);
 
-void horizontalFlip(unsigned char** pixelArray, unsigned char** finalData, ImageMetadata *metadata);
+void horizontalFlip(char* outputBuffer, char* fileBuffer, ImageData *imageData);
 
-void fillWithSolidColour(unsigned char** finalData, ImageMetadata *metadata);
+void fillWithSolidColour(char* outputBuffer, ImageData *imageData);
 
 #endif
