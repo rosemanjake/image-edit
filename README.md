@@ -54,7 +54,7 @@ For a 5MB BMP image on my Macbook Air M2, the processing times are as follows:
 
 In my first attempt, the program was running in ~27ms. This was because I was
 arranging the pixel data into a 2D array to make the transformation functions
-simpler. However, that approach was quite slow beacuse the program was copying
+simpler. However, that approach was quite slow because the program was copying
 the data multiple time across several buffers.
 
 I simplified the code so that it copies data from the file buffer directly into
