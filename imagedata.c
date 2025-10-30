@@ -10,7 +10,8 @@ FILE *openFile(const char* fileName, const char* mode){
   filePointer = fopen(fileName, mode);
 
   if (filePointer == NULL){
-    printf("Error: Could not open file.\n");
+    perror("Error: Could not open file.\n");
+    return NULL;
   }
 
   return filePointer;
@@ -19,11 +20,16 @@ FILE *openFile(const char* fileName, const char* mode){
 // Reads a full bitmap file and return its contents as a byte array.
 char *readBitMapData(char *fileName, int *fileSize){
   FILE* file = openFile(fileName, "rb");
+  if (file == NULL) return NULL;
   fseek(file, 0, SEEK_END);
   *fileSize = (int)ftell(file);
   fseek(file, 0, SEEK_SET);
 
   char *fileBuffer = malloc(*fileSize * sizeof(unsigned char));
+  if (fileBuffer == NULL){
+    perror("Could not allocate memory for fileBuffer");
+    return NULL;
+  }
   fread(fileBuffer, 1, *fileSize, file);
   fclose(file);
 
@@ -35,8 +41,8 @@ ImageData *getImageData(char* fileName){
   ImageData *imageData = malloc(sizeof(ImageData));
   imageData->fileSize = 0;
   imageData->fileBuffer = readBitMapData(fileName, &imageData->fileSize);
-  if (imageData->fileSize <= 0){
-    perror("Could not read file size.");
+  if (imageData->fileSize <= 0 || imageData->fileBuffer == NULL){
+    perror("Could not read file.");
     return NULL;
   }
 
